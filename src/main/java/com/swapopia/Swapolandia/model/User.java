@@ -25,9 +25,9 @@ public class User {
     private String password;
 
     @NotNull(message = "O valor do dinheiro é obrigatório")
-    private Float money;
+    private Float cash;
 
-    //upload de imagem
+    
     private String ProfilePicture;
 
 
@@ -75,19 +75,6 @@ public class User {
         this.password = password;
     }
 
-    /**
-     * @return float return the money
-     */
-    public float getMoney() {
-        return money;
-    }
-
-    /**
-     * @param money the money to set
-     */
-    public void setMoney(float money) {
-        this.money = money;
-    }
 
 
     /**
@@ -117,6 +104,21 @@ public class User {
      */
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+
+    /**
+     * @return Float return the cash
+     */
+    public Float getCash() {
+        return cash;
+    }
+
+    /**
+     * @param cash the cash to set
+     */
+    public void setCash(Float cash) {
+        this.cash = cash;
     }
 
 }

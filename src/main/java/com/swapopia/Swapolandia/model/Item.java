@@ -14,8 +14,6 @@ public class Item {
     private String description;
     private double price;
 
-   
-    
 
     /**
      * @return Long return the itemId

@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SwapRepository extends JpaRepository<Swap, Long> {
 
-    List<Swap> findByProposer(User proposer);
+    List<Swap> findBySender(User sender);
     
 }

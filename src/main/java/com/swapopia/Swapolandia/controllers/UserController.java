@@ -10,15 +10,16 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 //import org.springframework.web.multipart.MultipartFile;
 
-//import java.util.Optional;
+import java.util.Optional;
 //import java.util.UUID;
 //import java.io.IOException;
 import java.util.List;
 //import java.io.File;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/user")
-
 public class UserController {
 
     private final UserRepository userRepository;
@@ -44,13 +45,13 @@ public class UserController {
             return new ResponseEntity<>("Credenciais inválidas", HttpStatus.UNAUTHORIZED);
         }
 
-        return new ResponseEntity<>("Login bem-sucedido", HttpStatus.OK);
+        return new ResponseEntity<>("Login bem-sucedido!", HttpStatus.OK);
     }
 
-    // Endpoint para registrar um usuário
     // validação nao está funcionando
+    // Endpoint para registrar um usuário
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody User user, BindingResult bindingResult) {
+    public ResponseEntity<?> registerUser(@RequestBody @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             StringBuilder errorMessage = new StringBuilder();
             for (FieldError fieldError : bindingResult.getFieldErrors()) {
@@ -71,38 +72,69 @@ public class UserController {
         return new ResponseEntity<>("Usuário registrado com sucesso", HttpStatus.OK);
     }
 
-    /*@PostMapping("/uploadProfilePicture")
-    public ResponseEntity<String> uploadProfilePicture(@RequestParam("file") MultipartFile file,
-            @RequestParam("userId") Long userId) {
-        try {
-            // Verificar se o usuário com o ID fornecido existe no banco de dados
-            Optional<User> optionalUser = userRepository.findById(userId);
-            if (optionalUser.isEmpty()) {
-                return new ResponseEntity<>("Usuário não encontrado", HttpStatus.NOT_FOUND);
-            }
-
-            User user = optionalUser.get();
-
-            // Verificar se o arquivo é uma imagem
-            if (file == null || !file.getContentType().startsWith("image/")) {
-                return new ResponseEntity<>("O arquivo não é uma imagem válida", HttpStatus.BAD_REQUEST);
-            }
-
-            // Salvar a foto no diretório de imagens (você pode personalizar o diretório
-            // conforme sua necessidade)
-            String imagePath = "C:/uploads/profile_pictures/";
-            String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-            File dest = new File(imagePath + fileName);
-            file.transferTo(dest);
-
-            // Atualizar o caminho da foto de perfil do usuário no banco de dados
-            user.setProfilePicture(fileName);
-            userRepository.save(user);
-
-            return new ResponseEntity<>("Foto de perfil carregada com sucesso", HttpStatus.OK);
-        } catch (IOException e) {
-            return new ResponseEntity<>("Erro ao fazer o upload da foto", HttpStatus.INTERNAL_SERVER_ERROR);
+    @PutMapping("/usuario")
+    public ResponseEntity<String> updateUserProfile(@RequestBody User user) {
+        // Verificar se o usuário com o ID fornecido existe no banco de dados
+        Optional<User> optionalUser = userRepository.findById(user.getUserId());
+        if (optionalUser.isEmpty()) {
+            return new ResponseEntity<>("Usuário não encontrado", HttpStatus.NOT_FOUND);
         }
-    }*/
+
+        User existingUser = optionalUser.get();
+
+        // Atualizar o nome do usuário
+        existingUser.setName(user.getName());
+
+        // Verificar se a senha foi fornecida e atualizar a senha do usuário
+        if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+            existingUser.setPassword(user.getPassword());
+        }
+
+        userRepository.save(existingUser);
+
+        return new ResponseEntity<>("Perfil do usuário atualizado com sucesso", HttpStatus.OK);
+    }
+
+    /*
+     * @PostMapping("/uploadProfilePicture")
+     * public ResponseEntity<String> uploadProfilePicture(@RequestParam("file")
+     * MultipartFile file,
+     * 
+     * @RequestParam("userId") Long userId) {
+     * try {
+     * // Verificar se o usuário com o ID fornecido existe no banco de dados
+     * Optional<User> optionalUser = userRepository.findById(userId);
+     * if (optionalUser.isEmpty()) {
+     * return new ResponseEntity<>("Usuário não encontrado", HttpStatus.NOT_FOUND);
+     * }
+     * 
+     * User user = optionalUser.get();
+     * 
+     * // Verificar se o arquivo é uma imagem
+     * if (file == null || !file.getContentType().startsWith("image/")) {
+     * return new ResponseEntity<>("O arquivo não é uma imagem válida",
+     * HttpStatus.BAD_REQUEST);
+     * }
+     * 
+     * // Salvar a foto no diretório de imagens (você pode personalizar o diretório
+     * // conforme sua necessidade)
+     * String imagePath = "C:/uploads/profile_pictures/";
+     * String fileName = UUID.randomUUID().toString() + "_" +
+     * file.getOriginalFilename();
+     * File dest = new File(imagePath + fileName);
+     * file.transferTo(dest);
+     * 
+     * // Atualizar o caminho da foto de perfil do usuário no banco de dados
+     * user.setProfilePicture(fileName);
+     * userRepository.save(user);
+     * 
+     * return new ResponseEntity<>("Foto de perfil carregada com sucesso",
+     * HttpStatus.OK);
+     * } catch (IOException e) {
+     * return new ResponseEntity<>("Erro ao fazer o upload da foto",
+     * HttpStatus.INTERNAL_SERVER_ERROR);
+     * }
+     * }
+     */
 
 }

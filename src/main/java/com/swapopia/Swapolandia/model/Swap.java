@@ -4,7 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 
 @Entity
@@ -14,17 +16,19 @@ public class Swap {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     private User sender;
 
-    @OneToOne
+    @ManyToOne
     private User receiver;
 
-    //lista de itens enviados
-    @OneToOne
-    private Item sentItems;
+    // Lista de itens enviados
+    @OneToMany
+    private List<Item> sentItems;
 
-    private Item receivedItems;
+    // Lista de itens recebidos
+    @OneToMany
+    private List<Item> receivedItems;
 
     private boolean accepted;
 
@@ -74,30 +78,31 @@ public class Swap {
     /**
      * @return Item return the sentItems
      */
-    public Item getSentItems() {
+    public List<Item> getSentItems() {
         return sentItems;
     }
 
     /**
      * @param sentItems the sentItems to set
      */
-    public void setSentItems(Item sentItems) {
+    public void setSentItems(List<Item> sentItems) {
         this.sentItems = sentItems;
     }
 
     /**
      * @return Item return the receivedItems
      */
-    public Item getReceivedItems() {
+    public List<Item> getReceivedItems() {
         return receivedItems;
     }
 
     /**
      * @param receivedItems the receivedItems to set
      */
-    public void setReceivedItems(Item receivedItems) {
+    public void setReceivedItems(List<Item> receivedItems) {
         this.receivedItems = receivedItems;
     }
+
 
     /**
      * @return boolean return the accepted
