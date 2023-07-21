@@ -10,6 +10,7 @@ public class ErrorResponse {
     }
 
     // Getters e setters
+    
 
     /**
      * @return String return the error

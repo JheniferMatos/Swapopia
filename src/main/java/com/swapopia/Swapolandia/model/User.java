@@ -14,7 +14,6 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-
     @NotEmpty(message = "O nome é obrigatório")
     private String name;
 

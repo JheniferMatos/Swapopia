@@ -2,6 +2,7 @@ package com.swapopia.Swapolandia.controllers;
 
 import com.swapopia.Swapolandia.repository.UserRepository;
 import com.swapopia.Swapolandia.model.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 //import org.springframework.web.multipart.MultipartFile;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.Optional;
 //import java.util.UUID;
@@ -37,16 +39,22 @@ public class UserController {
     }
 
     // Endpoint para buscar um usuário pelo login
-    @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody User loginUser) {
-        User user = userRepository.findByLogin(loginUser.getLogin());
+@PostMapping("/login")
+public ResponseEntity<String> loginUser(@RequestBody User loginUser) {
+    User user = userRepository.findByLogin(loginUser.getLogin());
 
-        if (user == null || !user.getPassword().equals(loginUser.getPassword())) {
-            return new ResponseEntity<>("Credenciais inválidas", HttpStatus.UNAUTHORIZED);
-        }
-
-        return new ResponseEntity<>("Login bem-sucedido!", HttpStatus.OK);
+    // Verificar se o usuário existe
+    if (user == null) {
+        return new ResponseEntity<>("Credenciais inválidas", HttpStatus.UNAUTHORIZED);
     }
+
+    // Verificar se a senha fornecida pelo usuário corresponde à senha armazenada como hash no banco de dados
+    if (BCrypt.checkpw(loginUser.getPassword(), user.getPassword())) {
+        return new ResponseEntity<>("Login bem-sucedido!", HttpStatus.OK);
+    } else {
+        return new ResponseEntity<>("Credenciais inválidas", HttpStatus.UNAUTHORIZED);
+    }
+}
 
     // validação nao está funcionando
     // Endpoint para registrar um usuário
@@ -65,6 +73,12 @@ public class UserController {
         if (userRepository.findByLogin(user.getLogin()) != null) {
             return new ResponseEntity<>("Usuário já cadastrado", HttpStatus.BAD_REQUEST);
         }
+
+        //Gerar o hash da senha usando o BCrypt
+        String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+
+        // Definir a senha do usuário como o hash gerado
+        user.setPassword(hashedPassword);
 
         // Salvar o usuário no banco de dados
         userRepository.save(user);
