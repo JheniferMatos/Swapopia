@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import com.rpg.swapopia.domain.user.User;
+import com.rpg.swapopia.model.user.User;
 import com.rpg.swapopia.repositories.UserRepository;
 
 import jakarta.persistence.EntityNotFoundException;

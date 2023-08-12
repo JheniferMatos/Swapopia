@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rpg.swapopia.domain.item.Item;
+import com.rpg.swapopia.model.item.Item;
 import com.rpg.swapopia.repositories.ItemRepository;
 
 @RestController

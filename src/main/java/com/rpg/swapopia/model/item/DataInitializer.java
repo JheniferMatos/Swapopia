@@ -1,4 +1,4 @@
-package com.rpg.swapopia.domain.item;
+package com.rpg.swapopia.model.item;
 
 import org.springframework.stereotype.Service;
 

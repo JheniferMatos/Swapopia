@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.rpg.swapopia.domain.item.Box;
-import com.rpg.swapopia.domain.user.User;
+import com.rpg.swapopia.model.item.Box;
+import com.rpg.swapopia.model.user.User;
 import com.rpg.swapopia.repositories.BoxRepository;
 import com.rpg.swapopia.services.BoxService;
 
@@ -28,6 +28,7 @@ public class BoxController {
     private BoxRepository boxRepository;
     @Autowired
     private BoxService boxService;
+
     
 
     public BoxController(BoxRepository boxRepository, BoxService boxService) {

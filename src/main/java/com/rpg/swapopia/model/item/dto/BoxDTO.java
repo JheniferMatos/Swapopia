@@ -1,3 +1,3 @@
-package com.rpg.swapopia.domain.item.dto;
+package com.rpg.swapopia.model.item.dto;
 
 public record BoxDTO(String type, double price) {}

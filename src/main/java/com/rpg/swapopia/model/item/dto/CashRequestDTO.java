@@ -1,4 +1,4 @@
-package com.rpg.swapopia.domain.item.dto;
+package com.rpg.swapopia.model.item.dto;
 
 public class CashRequestDTO {
     private float amount;

@@ -1,4 +1,4 @@
-package com.rpg.swapopia.domain.user;
+package com.rpg.swapopia.model.user;
 
 public enum UserRole {
     ADMIN("admin"),

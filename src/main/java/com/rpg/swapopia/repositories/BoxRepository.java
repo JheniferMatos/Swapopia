@@ -2,7 +2,8 @@ package com.rpg.swapopia.repositories;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.rpg.swapopia.domain.item.Box;
+import com.rpg.swapopia.model.item.Box;
+import com.rpg.swapopia.model.item.Inventory;
 
 
 public interface BoxRepository extends JpaRepository<Box, Long> {
@@ -15,6 +16,9 @@ public interface BoxRepository extends JpaRepository<Box, Long> {
 
     List<Box> findAll();
 
+    List<Box> findAllByType(String type);
     Box findByType(String type);
+    
+    List<Box> findByInventory(Inventory inventory);
 
 }

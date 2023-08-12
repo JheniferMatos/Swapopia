@@ -1,9 +1,9 @@
-package com.rpg.swapopia.domain.item;
+package com.rpg.swapopia.model.item;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.rpg.swapopia.domain.user.User;
+import com.rpg.swapopia.model.user.User;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;

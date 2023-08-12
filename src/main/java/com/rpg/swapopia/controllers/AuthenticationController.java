@@ -1,11 +1,11 @@
 package com.rpg.swapopia.controllers;
 
-import com.rpg.swapopia.domain.item.Inventory;
-import com.rpg.swapopia.domain.user.User;
-import com.rpg.swapopia.domain.user.dto.AuthenticationDTO;
-import com.rpg.swapopia.domain.user.dto.LoginResponseDTO;
-import com.rpg.swapopia.domain.user.dto.RegisterDTO;
-import com.rpg.swapopia.domain.user.dto.UpdateUserDTO;
+import com.rpg.swapopia.model.item.Inventory;
+import com.rpg.swapopia.model.user.User;
+import com.rpg.swapopia.model.user.dto.AuthenticationDTO;
+import com.rpg.swapopia.model.user.dto.LoginResponseDTO;
+import com.rpg.swapopia.model.user.dto.RegisterDTO;
+import com.rpg.swapopia.model.user.dto.UpdateUserDTO;
 import com.rpg.swapopia.infra.security.TokenService;
 import com.rpg.swapopia.repositories.InventoryRepository;
 import com.rpg.swapopia.repositories.UserRepository;

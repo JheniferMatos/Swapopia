@@ -5,8 +5,8 @@ package com.rpg.swapopia.repositories;
 //import com.swapopia.Swapolandia.model.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.rpg.swapopia.domain.item.Inventory;
-import com.rpg.swapopia.domain.user.User;
+import com.rpg.swapopia.model.item.Inventory;
+import com.rpg.swapopia.model.user.User;
 
 
 public interface InventoryRepository extends JpaRepository<Inventory, Long> {

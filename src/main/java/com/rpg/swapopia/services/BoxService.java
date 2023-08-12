@@ -3,14 +3,15 @@ package com.rpg.swapopia.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.rpg.swapopia.domain.user.User;
+import com.rpg.swapopia.model.user.User;
 import com.rpg.swapopia.repositories.BoxRepository;
+import com.rpg.swapopia.repositories.InventoryRepository;
 import com.rpg.swapopia.repositories.UserRepository;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.rpg.swapopia.domain.item.Box;
-import com.rpg.swapopia.domain.item.Inventory;
+import com.rpg.swapopia.model.item.Box;
+import com.rpg.swapopia.model.item.Inventory;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -24,8 +25,12 @@ public class BoxService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private InventoryRepository inventoryRepository;
+
     @PersistenceContext
     private EntityManager entityManager;
+
 
     @Transactional
     public void comprarCaixa(User user, String type) {
@@ -49,6 +54,7 @@ public class BoxService {
         user.setInventory(userInventory);
 
         userRepository.save(user); // Isso salvará tanto o usuário quanto as mudanças na box
+        inventoryRepository.save(userInventory);
     }
 
 }

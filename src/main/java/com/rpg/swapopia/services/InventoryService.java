@@ -11,34 +11,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
-import com.rpg.swapopia.domain.item.Box;
-import com.rpg.swapopia.domain.item.Inventory;
-import com.rpg.swapopia.domain.item.Item;
-import com.rpg.swapopia.domain.item.dto.BoxDTO;
-import com.rpg.swapopia.domain.user.User;
+import com.rpg.swapopia.model.item.Box;
+import com.rpg.swapopia.model.item.Inventory;
+import com.rpg.swapopia.model.item.Item;
+import com.rpg.swapopia.model.item.dto.BoxDTO;
+import com.rpg.swapopia.model.user.User;
+import com.rpg.swapopia.repositories.BoxRepository;
 import com.rpg.swapopia.repositories.InventoryRepository;
+import com.rpg.swapopia.repositories.ItemRepository;
 import com.rpg.swapopia.repositories.UserRepository;
 
 @Service
 public class InventoryService {
-    // @Autowired
-    // private ItemRepository itemRepository; // Supondo que você tenha um
-    // repositório para itens
+    @Autowired
+    private ItemRepository itemRepository; 
+    @Autowired
+    private BoxRepository boxRepository; 
     
-    private final InventoryRepository inventoryRepository;
+    @Autowired
+    private InventoryRepository inventoryRepository;
 
     @Autowired
     private UserRepository userRepository;
 
-    public InventoryService(InventoryRepository inventoryRepository) {
-        this.inventoryRepository = inventoryRepository;
+    
+    
+    public Inventory getInventoryByUser(User user) {
+        Inventory inventory = inventoryRepository.findByUser(user);
+        if (inventory != null) {
+            List<Box> boxes = boxRepository.findByInventory(inventory);
+            List<Item> items = itemRepository.findByInventory(inventory);
+            inventory.setBoxes(boxes);
+            inventory.setItems(items);
+        }
+        return inventory;
     }
     
-    public List<Item> getInventoryByUser(User user) {
-        // Supondo que Inventory tenha uma lista de itens chamada "items"
-        Inventory userInventory = inventoryRepository.findByUser(user);
-        return userInventory.getItems();
-    }
 
     public void purchaseBox(User user, Box box) throws Exception {
         if (user.getCash() >= box.getPrice()) {
@@ -107,9 +115,20 @@ public class InventoryService {
     private Map<String, Inventory> userInventories = new HashMap<>();
 
     // Método para buscar o inventário de um usuário pelo nome de usuário (login)
-    public Inventory getInventoryByUser(String username) {
-        return userInventories.getOrDefault(username, null);
+    public Inventory getInventoryByUser(String login) {
+        Inventory userInventory = userInventories.getOrDefault(login, null);
+    
+        if (userInventory == null) {
+            User user = userRepository.findByLogin(login);
+            if (user != null) {
+                userInventory = inventoryRepository.findByUser(user);
+                userInventories.put(login, userInventory);
+            }
+        }
+    
+        return userInventory;
     }
+    
 
     // Método para atualizar o inventário de um usuário
     public void updateInventory(String username, Inventory inventory) {

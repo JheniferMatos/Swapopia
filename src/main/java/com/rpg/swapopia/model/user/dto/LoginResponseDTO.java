@@ -1,4 +1,4 @@
-package com.rpg.swapopia.domain.user.dto;
+package com.rpg.swapopia.model.user.dto;
 
 public record LoginResponseDTO(String token) {
 }

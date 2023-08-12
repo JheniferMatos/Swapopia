@@ -1,4 +1,4 @@
-package com.rpg.swapopia.domain.user;
+package com.rpg.swapopia.model.user;
 
 
 
@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import java.util.List;
-import com.rpg.swapopia.domain.item.Item;
+import com.rpg.swapopia.model.item.Item;
 
 @Table(name = "swap")
 @Entity(name = "swap")
@@ -35,6 +35,7 @@ public class Swap {
     @OneToMany
     private List<Item> recipientItems; // Itens propostos pelo destinatário
 
-    private boolean accepted; // Se a troca foi aceita
+    @Enumerated(EnumType.STRING)
+    private SwapStatus status; // Enum: PENDING, ACCEPTED, REJECTED
 
 }

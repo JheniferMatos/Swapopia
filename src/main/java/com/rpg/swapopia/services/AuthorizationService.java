@@ -1,6 +1,6 @@
 package com.rpg.swapopia.services;
 
-import com.rpg.swapopia.domain.user.User;
+import com.rpg.swapopia.model.user.User;
 import com.rpg.swapopia.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,4 +1,4 @@
-package com.rpg.swapopia.domain.user;
+package com.rpg.swapopia.model.user;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.rpg.swapopia.domain.item.Inventory;
+import com.rpg.swapopia.model.item.Inventory;
 
 import java.util.Collection;
 import java.util.List;

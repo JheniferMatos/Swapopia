@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.Authentication;
 
-import com.rpg.swapopia.domain.item.dto.CashRequestDTO;
-import com.rpg.swapopia.domain.user.User;
+import com.rpg.swapopia.model.item.dto.CashRequestDTO;
+import com.rpg.swapopia.model.user.User;
 import com.rpg.swapopia.services.UserService;
 
 @RestController
