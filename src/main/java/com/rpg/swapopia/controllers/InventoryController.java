@@ -27,6 +27,7 @@ import com.rpg.swapopia.model.item.dto.BoxDTO;
 import com.rpg.swapopia.model.user.User;
 import com.rpg.swapopia.repositories.BoxRepository;
 import com.rpg.swapopia.repositories.InventoryRepository;
+import com.rpg.swapopia.repositories.UserRepository;
 //import com.rpg.swapopia.repositories.BoxRepository;
 //import com.rpg.swapopia.repositories.UserRepository;
 import com.rpg.swapopia.services.InventoryService;
@@ -43,6 +44,9 @@ public class InventoryController {
 
     @Autowired
     private InventoryRepository inventoryRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     // endpoint para retornar a lista de itens e caixas do inventario
     @GetMapping
@@ -67,6 +71,40 @@ public class InventoryController {
         List<BoxDTO> boxes = inventoryService.getBoxesByUserId(userId);
         return ResponseEntity.ok(boxes);
     }
+
+    @PostMapping("/vender/{ItemName}")
+public ResponseEntity<String> sellItemByName(
+    @PathVariable String itemName,
+    @AuthenticationPrincipal User authenticatedUser) {
+    List<Item> userItems = authenticatedUser.getInventory().getItems();
+    
+    // Encontre o item pelo nome
+    Item itemToSell = userItems.stream()
+        .filter(item -> item.getName().equals(itemName))
+        .findFirst()
+        .orElse(null);
+
+    if (itemToSell == null) {
+        return ResponseEntity.notFound().build();
+    }
+
+    // Obtenha o valor de venda do item (o mesmo valor que foi inserido ao abrir a caixa)
+    float saleValue = itemToSell.getPrice();
+
+    // Atualize o saldo do usuário com o valor da venda
+    authenticatedUser.setCash(authenticatedUser.getCash() + saleValue);
+
+    // Remova o item do inventário do usuário
+    userItems.remove(itemToSell);
+
+    // Salve as alterações no banco de dados
+    userRepository.save(authenticatedUser);
+    inventoryRepository.save(authenticatedUser.getInventory());
+
+    return ResponseEntity.ok("Item vendido com sucesso.");
+}
+
+
 
     @PostMapping("/abrir/{boxType}")
     public ResponseEntity<String> openBoxByType(
