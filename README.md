@@ -1,73 +1,79 @@
-# Authentication API
+# SWAPOPIA, UM MUNDO DE TROCAS
+# Projeto RPG em Java com Spring Boot e REST
 
-![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
-![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
-![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
-![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
+Este é um projeto de um RPG desenvolvido em Java utilizando o framework Spring Boot para a criação de uma API REST. O projeto permite que os usuários se registrem, autentiquem, comprem caixas, abram caixas, troquem itens entre si e realizem outras ações relacionadas ao mundo do RPG.
 
-This project is an API built using **Java, Java Spring, Flyway Migrations, PostgresSQL as the database, and Spring Security and JWT for authentication control.**
+## Tecnologias Utilizadas
 
-The API was developed for my [Youtube Tutorial](https://www.youtube.com/watch?v=5w-YCcOjPD0), to demonstrate how to configure Authenticatio and Authorization in Spring application using Spring Security.
+- Java
+- Spring Boot
+- Spring Data JPA
+- Spring Security
+- RESTful API
+- Banco de Dados Relacional (ex: MySQL, PostgreSQL)
+- Postman (para testar as requisições da API)
 
-## Table of Contents
+## Estrutura do Projeto
 
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [API Endpoints](#api-endpoints)
-- [Authentication](#authentication)
-- [Database](#database)
-- [Contributing](#contributing)
+O projeto está organizado nas seguintes camadas:
 
-## Installation
+- **Model**: Contém as classes de entidade que representam os dados do projeto.
+- **Repository**: Contém interfaces que estendem o Spring Data JPA para realizar operações no banco de dados.
+- **Controller**: Responsável por receber as requisições HTTP, processar as ações e retornar as respostas.
+- **Service**: Lida com a lógica de negócio e atua como intermediário entre o Controller e o Repository.
+- **Security**: Configurações de segurança, autenticação e autorização.
 
-1. Clone the repository:
+## Funcionalidades
 
-```bash
-git clone https://github.com/Fernanda-Kipper/auth-api.git
-```
+O projeto RPG em Java com Spring Boot e REST oferece as seguintes funcionalidades:
 
-2. Install dependencies with Maven
+### Registro e Autenticação
 
-3. Install [PostgresSQL](https://www.postgresql.org/)
+- Os usuários podem se registrar fornecendo nome, login e senha.
+- A autenticação é feita utilizando login e senha.
 
-## Usage
+### Compra de Caixas
 
-1. Start the application with Maven
-2. The API will be accessible at http://localhost:8080
+- Os usuários podem comprar caixas de diferentes tipos.
+- As caixas podem conter itens aleatórios com base nas definições.
 
+### Abertura de Caixas
 
-## API Endpoints
-The API provides the following endpoints:
+- Os usuários podem abrir caixas e receber itens aleatórios.
+- Itens recebidos são baseados no tipo de caixa e suas definições.
 
-```markdown
-GET /product - Retrieve a list of all products. (all authenticated users)
+### Troca de Itens
 
-POST /product - Register a new product (ADMIN access required).
+- Os usuários podem propor trocas de itens com outros usuários.
+- As propostas de troca podem ser aceitas ou recusadas.
+- O status das trocas é salvo no banco de dados.
 
-POST /auth/login - Login into the App
+### Atualização de Perfil
 
-POST /auth/register - Register a new user into the App
-```
+- Os usuários podem atualizar seu nome e foto de perfil.
 
-## Authentication
-The API uses Spring Security for authentication control. The following roles are available:
+### Venda de Itens
 
-```
-USER -> Standard user role for logged-in users.
-ADMIN -> Admin role for managing partners (registering new partners).
-```
-To access protected endpoints as an ADMIN user, provide the appropriate authentication credentials in the request header.
+- Os usuários podem vender itens específicos que possuem em seu inventário.
+- O valor de venda é determinado pelo valor do item ao ser aberto.
 
-## Database
-The project utilizes [PostgresSQL](https://www.postgresql.org/) as the database. The necessary database migrations are managed using Flyway.
+### Visualização de Inventário
 
-## Contributing
-
-Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request to the repository.
-
-When contributing to this project, please follow the existing code style, [commit conventions](https://www.conventionalcommits.org/en/v1.0.0/), and submit your changes in a separate branch.
+- Os usuários podem visualizar os itens e caixas que possuem em seu inventário.
 
 
+## Como Executar o Projeto
+
+1. Clone este repositório para sua máquina local.
+2. Instale o [MySQL](https://www.mysql.com/) ou outro banco de dados relacional.
+3. Abra o projeto em sua IDE favorita
+4. Configure as propriedades do banco de dados no arquivo `src/main/resources/application.properties`.
+5. Dentro da pasta do projeto, execute o comando `mvn clean install` para instalar as dependências.
+6. Execute o comando `mvn spring-boot:run` para iniciar a aplicação.
+7. Utilize o Postman ou outro cliente de API para testar as diferentes rotas e funcionalidades.
+
+## Contribuição
+
+Este projeto é de código aberto e as contribuições são bem-vindas! Sinta-se à vontade para fazer um fork, implementar melhorias e enviar um pull request.
 
 
